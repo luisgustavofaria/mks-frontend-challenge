@@ -1,8 +1,13 @@
 import { ShoppingCart } from '@phosphor-icons/react';
 import styled from 'styled-components';
 
-const HeaderContainer = styled.header`
+const HeaderBackGround = styled.header`
   background-color: ${(props) => props.theme.primary};
+`;
+
+const HeaderContainer = styled.div`
+  margin: 0 auto;
+  max-width: 1440px;
   height: 101px;
   padding: 28px 70px;
 
@@ -34,20 +39,27 @@ const CartButton = styled.div`
   height: 45px;
   background-color: #ffffff;
   border-radius: 8px;
+  padding: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 `;
 
 export default function Header() {
   return (
-    <>
+    <HeaderBackGround>
       <HeaderContainer>
         <Logo>
           <Title01>MKS</Title01>
           <Title02>Sistemas</Title02>
         </Logo>
         <CartButton>
-          <ShoppingCart size={32} />
+          <ShoppingCart size={20} />
+          <span>0</span>
         </CartButton>
       </HeaderContainer>
-    </>
+    </HeaderBackGround>
   );
 }
