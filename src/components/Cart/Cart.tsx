@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 const CartContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
 
-  height: 800px;
+  height: 100vh;
   right: 0;
   top: 0;
   display: flex;
