@@ -16,6 +16,11 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    height: 50px;
+    padding: 5px 20px;
+  }
 `
 
 const Logo = styled.div`
@@ -28,12 +33,20 @@ const Title01 = styled.h1`
   font-weight: 600;
   font-size: 40px;
   color: #ffffff;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 `
 
 const Title02 = styled.h2`
   font-weight: 300;
   font-size: 20px;
   color: #ffffff;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `
 
 const CartButton = styled.button`
@@ -48,6 +61,13 @@ const CartButton = styled.button`
   justify-content: center;
   gap: 20px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 52px;
+    height: 26px;
+    padding: 0;
+    gap: 5px;
+  }
 `
 
 export default function Header() {

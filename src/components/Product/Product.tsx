@@ -6,12 +6,19 @@ import styled from 'styled-components'
 const ContainerProducts = styled.div`
   margin: 0 auto;
   max-width: 938px;
-  //height: 601px;
+
   margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   flex: 1;
+
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const ContainerCard = styled.div`
@@ -24,6 +31,11 @@ const ContainerCard = styled.div`
   gap: 8px;
   border-radius: 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.135216);
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 328px;
+  }
 `
 
 const ContainerImage = styled.div`
@@ -42,6 +54,10 @@ const ContainerTitlePrice = styled.div`
 const Title = styled.span`
   font-weight: 400;
   font-size: 16px;
+
+  @media (max-width: 768px) {
+    width: 150px;
+  }
 `
 
 const Price = styled.span`
@@ -85,6 +101,11 @@ const FooterContainer = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+
+  span {
+    font-weight: 400;
+    font-size: 12px;
+  }
 `
 
 export default function Products() {

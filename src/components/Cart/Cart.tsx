@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 const CartContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
-  width: 485px;
 
   height: 800px;
   right: 0;
@@ -13,6 +12,10 @@ const CartContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: absolute;
+
+  @media (max-width: 768px) {
+    max-width: 485px;
+  }
 `
 
 const CartHeader = styled.div`
@@ -26,7 +29,12 @@ const CartHeader = styled.div`
     font-weight: 700;
     font-size: 27px;
     color: #ffffff;
-    width: 50%;
+    width: 170px;
+  }
+  @media (max-width: 768px) {
+    span {
+      width: 170px;
+    }
   }
 `
 
@@ -56,6 +64,11 @@ const ItemContainer = styled.div`
   padding: 0 50px;
   max-height: 400px; /* Defina a altura máxima que desejar */
   overflow-y: auto; /* Adiciona a rolagem vertical quando necessário */
+
+  @media (max-width: 768px) {
+    align-items: center;
+    gap: 15px;
+  }
 `
 
 const Item = styled.div`
@@ -71,12 +84,39 @@ const Item = styled.div`
   img {
     width: 50px;
   }
+
+  @media (max-width: 768px) {
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 220px;
+    flex-direction: column;
+    gap: 10px;
+
+    img {
+      width: 80px;
+    }
+  }
 `
 
 const Title = styled.span`
   font-weight: 400;
   font-size: 13px;
   color: #000000;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+`
+
+const QuantityPriceContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
 `
 
 const QuantityContainer = styled.div`
@@ -96,6 +136,12 @@ const QuantityContainer = styled.div`
     display: flex;
     align-self: flex-start;
     margin-bottom: 4px;
+  }
+
+  @media (max-width: 768px) {
+    span {
+      display: none;
+    }
   }
 `
 const Quantity = styled.div`
@@ -126,12 +172,40 @@ const Quantity = styled.div`
     border-left: 0.3px solid #bfbfbf;
     height: 11px;
   }
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 35px;
+
+    span {
+      font-size: 24px;
+    }
+    span:first-child {
+      height: 20px;
+    }
+
+    span:last-child {
+      height: 20px;
+    }
+  }
 `
 
 const Price = styled.span`
   font-weight: 700;
   font-size: 14px;
   color: #000000;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    background-color: #373737;
+    color: #ffffff;
+    width: 84px;
+    height: 34px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const Footer = styled.div`
@@ -175,15 +249,54 @@ const Cart = ({ onClose }: CartProps) => {
             <img src={'/products/apple-watch.png'} alt="" />
           </div>
           <Title>Apple Watch Series 4 GPS</Title>
-          <QuantityContainer>
-            <span>Qtd</span>
-            <Quantity>
-              <span>-</span>
-              <span>1</span>
-              <span>+</span>
-            </Quantity>
-          </QuantityContainer>
-          <Price>R$399</Price>
+          <QuantityPriceContainer>
+            <QuantityContainer>
+              <span>Qtd</span>
+
+              <Quantity>
+                <span>-</span>
+                <span>1</span>
+                <span>+</span>
+              </Quantity>
+            </QuantityContainer>
+            <Price>R$399</Price>
+          </QuantityPriceContainer>
+        </Item>
+        <Item>
+          <div>
+            <img src={'/products/apple-watch.png'} alt="" />
+          </div>
+          <Title>Apple Watch Series 4 GPS</Title>
+          <QuantityPriceContainer>
+            <QuantityContainer>
+              <span>Qtd</span>
+
+              <Quantity>
+                <span>-</span>
+                <span>1</span>
+                <span>+</span>
+              </Quantity>
+            </QuantityContainer>
+            <Price>R$399</Price>
+          </QuantityPriceContainer>
+        </Item>
+        <Item>
+          <div>
+            <img src={'/products/apple-watch.png'} alt="" />
+          </div>
+          <Title>Apple Watch Series 4 GPS</Title>
+          <QuantityPriceContainer>
+            <QuantityContainer>
+              <span>Qtd</span>
+
+              <Quantity>
+                <span>-</span>
+                <span>1</span>
+                <span>+</span>
+              </Quantity>
+            </QuantityContainer>
+            <Price>R$399</Price>
+          </QuantityPriceContainer>
         </Item>
       </ItemContainer>
       <Footer>
