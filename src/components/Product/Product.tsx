@@ -117,6 +117,7 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { Shimmer } from 'react-shimmer'
 
 export interface IProduct {
   id: number
@@ -142,7 +143,9 @@ export default function Products() {
       } catch (error) {
         console.error('Error fetching products:', error)
       } finally {
-        setLoading(false)
+        setTimeout(() => {
+          setLoading(false)
+        }, 2000) // Força um tempo de carregamento de 2 segundos
       }
     }
 
@@ -152,22 +155,28 @@ export default function Products() {
   return (
     <PageContainer>
       <ContainerProducts>
-        {products.map((product) => (
-          <ContainerCard key={product.id}>
-            <ContainerImage>
-              <Image src={product.photo} width={100} height={100} alt="" />
-            </ContainerImage>
-            <ContainerTitlePrice>
-              <Title>{product.name}</Title>
-              <Price>R$${Number(product.price).toFixed(0)}</Price>
-            </ContainerTitlePrice>
-            <Description>{product.description}</Description>
-            <Footer>
-              <ShoppingBagOpen color="#FFFFFF" size={16} />
-              <span>COMPRAR</span>
-            </Footer>
-          </ContainerCard>
-        ))}
+        {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <ContainerCard key={index}>
+                <Shimmer height={300} width={218} />
+              </ContainerCard>
+            ))
+          : products.map((product) => (
+              <ContainerCard key={product.id}>
+                <ContainerImage>
+                  <Image src={product.photo} width={100} height={100} alt="" />
+                </ContainerImage>
+                <ContainerTitlePrice>
+                  <Title>{product.name}</Title>
+                  <Price>R${Number(product.price).toFixed(0)}</Price>
+                </ContainerTitlePrice>
+                <Description>{product.description}</Description>
+                <Footer>
+                  <ShoppingBagOpen color="#FFFFFF" size={16} />
+                  <span>COMPRAR</span>
+                </Footer>
+              </ContainerCard>
+            ))}
       </ContainerProducts>
       <FooterContainer>
         <span>MKS sistemas © Todos os direitos reservados</span>
