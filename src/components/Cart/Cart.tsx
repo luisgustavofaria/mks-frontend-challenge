@@ -156,13 +156,16 @@ const Footer = styled.div`
     color: #ffffff;
   }
 `
+interface CartProps {
+  onClose: () => void
+}
 
-export default function Cart() {
+const Cart = ({ onClose }: CartProps) => {
   return (
     <CartContainer>
       <CartHeader>
         <span>Carrinho de compras</span>
-        <Close>
+        <Close onClick={onClose}>
           <X size={16} color="#ffffff" />
         </Close>
       </CartHeader>
@@ -195,3 +198,5 @@ export default function Cart() {
     </CartContainer>
   )
 }
+
+export default Cart
