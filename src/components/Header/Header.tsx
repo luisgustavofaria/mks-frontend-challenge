@@ -2,6 +2,7 @@ import { ShoppingCart } from '@phosphor-icons/react'
 import styled from 'styled-components'
 import Cart from '../Cart/Cart'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 const HeaderBackGround = styled.header`
   background-color: ${(props) => props.theme.primary};
@@ -85,11 +86,30 @@ export default function Header() {
             <Title01>MKS</Title01>
             <Title02>Sistemas</Title02>
           </Logo>
-          <CartButton onClick={toggleCart}>
-            <ShoppingCart size={20} />
-            <span>0</span>
-          </CartButton>
-          {!hiddenCart && <Cart onClose={toggleCart} />}
+
+          {!hiddenCart ? (
+            <motion.div
+              style={{
+                position: 'fixed',
+                top: '0%',
+                left: '100%',
+                transform: 'translate(-50%, -50%)',
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: hiddenCart ? 0 : 1,
+                scale: hiddenCart ? 0 : 1,
+              }}
+              transition={{ duration: 0.5, type: 'spring', stiffness: 70 }}
+            >
+              <Cart onClose={toggleCart} />
+            </motion.div>
+          ) : (
+            <CartButton onClick={toggleCart}>
+              <ShoppingCart size={20} />
+              <span>0</span>
+            </CartButton>
+          )}
         </HeaderContainer>
       </HeaderBackGround>
     </>

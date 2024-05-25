@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { X } from '@phosphor-icons/react'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 const CartContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
@@ -239,6 +240,7 @@ const Cart = ({ onClose }: CartProps) => {
     <CartContainer>
       <CartHeader>
         <span>Carrinho de compras</span>
+
         <Close onClick={onClose}>
           <X size={16} color="#ffffff" />
         </Close>
