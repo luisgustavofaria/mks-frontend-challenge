@@ -103,9 +103,13 @@ const Item = styled.div`
 `
 
 const Title = styled.span`
+  width: 120px;
   font-weight: 400;
   font-size: 13px;
   color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     font-size: 15px;
