@@ -37,7 +37,7 @@ describe('Products Component', () => {
     // Espera até que o carrinho seja atualizado (você pode precisar ajustar isso dependendo da implementação do addToCart)
     await waitFor(() => {
       // Verifica se o carrinho não está vazio após adicionar um produto
-      expect(getByText(/Carrinho/)).toBeInTheDocument()
+      expect(getByText(/Cart/)).toBeInTheDocument()
     })
   })
 })

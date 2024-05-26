@@ -30,9 +30,15 @@ const CartHeader = styled.div`
     color: #ffffff;
     width: 170px;
   }
+
   @media (max-width: 768px) {
     span {
       width: 170px;
+    }
+  }
+  @media (max-width: 1100px) {
+    span {
+      font-size: 20px;
     }
   }
 `
@@ -269,6 +275,20 @@ const Footer = styled.div`
     font-weight: 700;
     font-size: 28px;
     color: #ffffff;
+  }
+
+  @media (max-width: 1100px) {
+    span {
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 768px) {
+    div:first-child {
+      padding: 30px 30px 10px 30px;
+    }
+    div:last-child {
+      padding: 20px 10px 20px 10px;
+    }
   }
 `
 
