@@ -276,7 +276,7 @@ import { X } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { CartContext, CartContextType } from '@/Hooks/useCart'
-import { IProduct } from '../Product/Product'
+import { IProduct } from '../Products/Products'
 
 const Cart = () => {
   const {

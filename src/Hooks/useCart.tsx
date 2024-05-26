@@ -1,4 +1,4 @@
-import { IProduct } from '@/components/Product/Product'
+import { IProduct } from '@/components/Products/Products'
 import { ReactNode, createContext, useState, useEffect } from 'react'
 
 export interface CartContextType {
@@ -81,11 +81,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const removeFromCart = (id: number) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
+    setCartItems((prevItems) => {
+      const updatedCartItems = prevItems.filter((item) => item.id !== id)
+      // Verifica se o carrinho está vazio após a remoção do item
+      if (updatedCartItems.length === 0) {
+        setHiddenCart(true) // Oculta o carrinho se estiver vazio
+      }
+      return updatedCartItems
+    })
   }
 
   const toggleCart = () => {
-    setHiddenCart(!hiddenCart)
+    if (cartItems.length > 0) {
+      setHiddenCart(!hiddenCart)
+    }
   }
 
   return (
