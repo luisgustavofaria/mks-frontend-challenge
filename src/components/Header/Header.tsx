@@ -73,13 +73,7 @@ const CartButton = styled.button`
 `
 
 export default function Header() {
-  const { cartItems } = useContext(CartContext)
-
-  const [hiddenCart, setHiddenCart] = useState(true)
-
-  const toggleCart = () => {
-    setHiddenCart(!hiddenCart)
-  }
+  const { cartItems, hiddenCart, toggleCart } = useContext(CartContext)
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -110,7 +104,7 @@ export default function Header() {
               }}
               transition={{ duration: 0.5, type: 'spring', stiffness: 70 }}
             >
-              <Cart onClose={toggleCart} />
+              <Cart />
             </motion.div>
           ) : (
             <CartButton onClick={toggleCart}>

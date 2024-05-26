@@ -8,12 +8,15 @@ export interface CartContextType {
   increaseQuantity: (id: number) => void
   decreaseQuantity: (id: number) => void
   removeFromCart: (id: number) => void
+  hiddenCart: boolean
+  toggleCart: () => void
 }
 
 export const CartContext = createContext({} as CartContextType)
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<IProduct[]>([])
+  const [hiddenCart, setHiddenCart] = useState(true)
 
   const addToCart = (product: IProduct) => {
     const existingProduct = cartItems.findIndex(
@@ -73,6 +76,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
   }
 
+  const toggleCart = () => {
+    setHiddenCart(!hiddenCart)
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -81,6 +88,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         increaseQuantity,
         decreaseQuantity,
         removeFromCart,
+        hiddenCart,
+        toggleCart,
       }}
     >
       {children}

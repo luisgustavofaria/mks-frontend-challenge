@@ -278,13 +278,14 @@ import { useContext, useState } from 'react'
 import { CartContext, CartContextType } from '@/Hooks/useCart'
 import { IProduct } from '../Product/Product'
 
-interface CartProps {
-  onClose: () => void
-}
-
-const Cart = ({ onClose }: CartProps) => {
-  const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } =
-    useContext<CartContextType>(CartContext)
+const Cart = () => {
+  const {
+    cartItems,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+    toggleCart,
+  } = useContext<CartContextType>(CartContext)
 
   const calculateTotalPrice = () => {
     return cartItems.reduce(
@@ -298,7 +299,7 @@ const Cart = ({ onClose }: CartProps) => {
       <CartHeader>
         <span>Carrinho de compras</span>
 
-        <Close onClick={onClose}>
+        <Close onClick={toggleCart}>
           <X size={16} />
         </Close>
       </CartHeader>
