@@ -283,7 +283,7 @@ interface CartProps {
 }
 
 const Cart = ({ onClose }: CartProps) => {
-  const { cartItems, increaseQuantity, decreaseQuantity } =
+  const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } =
     useContext<CartContextType>(CartContext)
 
   const calculateTotalPrice = () => {
@@ -321,7 +321,7 @@ const Cart = ({ onClose }: CartProps) => {
               </QuantityContainer>
               <Price>R${item.price}</Price>
             </QuantityPriceContainer>
-            <RemoveItem>
+            <RemoveItem onClick={() => removeFromCart(item.id)}>
               <X />
             </RemoveItem>
           </Item>
