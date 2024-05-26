@@ -81,6 +81,11 @@ export default function Header() {
     setHiddenCart(!hiddenCart)
   }
 
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
+
   return (
     <>
       <HeaderBackGround>
@@ -110,7 +115,7 @@ export default function Header() {
           ) : (
             <CartButton onClick={toggleCart}>
               <ShoppingCart size={20} />
-              <span>{cartItems.length}</span>
+              <span>{totalQuantity}</span>
             </CartButton>
           )}
         </HeaderContainer>

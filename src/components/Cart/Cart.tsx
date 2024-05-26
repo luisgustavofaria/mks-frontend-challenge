@@ -47,22 +47,25 @@ const Close = styled.button`
   border: none;
   cursor: pointer;
   font-size: 27px;
-  color: #000000;
+
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    color: ${(props) => props.theme.primary};
+  }
 `
 
 const ItemContainer = styled.div`
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  flex: 1;
+
   padding: 0 50px;
-  max-height: 400px; /* Defina a altura máxima que desejar */
   overflow-y: auto; /* Adiciona a rolagem vertical quando necessário */
+  flex: 1;
+  z-index: 1;
 
   @media (max-width: 768px) {
     align-items: center;
@@ -71,6 +74,8 @@ const ItemContainer = styled.div`
 `
 
 const Item = styled.div`
+  margin-top: 30px;
+  position: relative;
   background-color: #ffffff;
   width: 385px;
   height: 101px;
@@ -78,7 +83,6 @@ const Item = styled.div`
   display: flex;
   align-items: center;
   padding: 25px;
-  gap: 30px;
 
   img {
     width: 50px;
@@ -222,6 +226,25 @@ const Price = styled.span`
   }
 `
 
+const RemoveItem = styled(Close)`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  color: #ffffff;
+  padding: 3px;
+
+  @media (max-width: 768px) {
+    background-color: #ffffff;
+    color: #000000;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+  }
+`
+
 const Footer = styled.div`
   div:first-child {
     padding: 50px 50px 30px 50px;
@@ -256,18 +279,8 @@ interface CartProps {
 }
 
 const Cart = ({ onClose }: CartProps) => {
-  const { cartItems } = useContext<CartContextType>(CartContext)
-  const [quantityItem, setQuantity] = useState(0)
-
-  const increaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1)
-  }
-
-  const decreaseQuantity = () => {
-    if (quantityItem > 0) {
-      setQuantity((prevQuantity) => prevQuantity - 1)
-    }
-  }
+  const { cartItems, increaseQuantity, decreaseQuantity } =
+    useContext<CartContextType>(CartContext)
 
   return (
     <CartContainer>
@@ -275,7 +288,7 @@ const Cart = ({ onClose }: CartProps) => {
         <span>Carrinho de compras</span>
 
         <Close onClick={onClose}>
-          <X size={16} color="#ffffff" />
+          <X size={16} />
         </Close>
       </CartHeader>
       <ItemContainer>
@@ -290,13 +303,16 @@ const Cart = ({ onClose }: CartProps) => {
                 <span>Qtd</span>
 
                 <Quantity>
-                  <button onClick={decreaseQuantity}>-</button>
-                  <span>{quantityItem}</span>
-                  <button onClick={increaseQuantity}>+</button>
+                  <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => increaseQuantity(item.id)}>+</button>
                 </Quantity>
               </QuantityContainer>
               <Price>R${item.price}</Price>
             </QuantityPriceContainer>
+            <RemoveItem>
+              <X />
+            </RemoveItem>
           </Item>
         ))}
       </ItemContainer>
