@@ -282,6 +282,13 @@ const Cart = ({ onClose }: CartProps) => {
   const { cartItems, increaseQuantity, decreaseQuantity } =
     useContext<CartContextType>(CartContext)
 
+  const calculateTotalPrice = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    )
+  }
+
   return (
     <CartContainer>
       <CartHeader>
@@ -319,7 +326,7 @@ const Cart = ({ onClose }: CartProps) => {
       <Footer>
         <div>
           <span>Total</span>
-          <span>R$798</span>
+          <span>R${calculateTotalPrice().toFixed(2)}</span>
         </div>
         <div>
           <span>Finalizar Compra</span>

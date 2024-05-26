@@ -15,15 +15,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<IProduct[]>([])
 
   const addToCart = (product: IProduct) => {
-    const existingProductIndex = cartItems.findIndex(
+    const existingProduct = cartItems.findIndex(
       (item) => item.id === product.id
     )
 
-    if (existingProductIndex !== -1) {
+    if (existingProduct !== -1) {
       // Se o produto já está no carrinho, aumenta a quantidade
       const updatedCartItems = [...cartItems]
-      updatedCartItems[existingProductIndex].quantity++
-      setCartItems(updatedCartItems)
+      if (updatedCartItems[existingProduct].quantity < 10) {
+        updatedCartItems[existingProduct].quantity++ // Aumenta a quantidade se for menor que 10
+        setCartItems(updatedCartItems)
+      }
     } else {
       // Se o produto não está no carrinho, adiciona-o com quantidade 1
       const newCartItem: IProduct = { ...product, quantity: 1 }
@@ -32,11 +34,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }
   console.log(cartItems)
 
+  // const increaseQuantity = (id: number) => {
+  //   setCartItems((prevItems) => {
+  //     return prevItems.map((item) => {
+  //       if (item.id === id) {
+  //         return { ...item, quantity: item.quantity + 1 }
+  //       }
+  //       return item
+  //     })
+  //   })
+  // }
+
   const increaseQuantity = (id: number) => {
     setCartItems((prevItems) => {
       return prevItems.map((item) => {
-        if (item.id === id) {
-          return { ...item, quantity: item.quantity + 1 }
+        if (item.id === id && item.quantity < 10) {
+          // Verifica se a quantidade é menor que 10
+          return { ...item, quantity: item.quantity + 1 } // Garante que a quantidade máxima seja 10
         }
         return item
       })
@@ -46,7 +60,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const decreaseQuantity = (id: number) => {
     setCartItems((prevItems) => {
       return prevItems.map((item) => {
-        if (item.id === id && item.quantity > 0) {
+        if (item.id === id && item.quantity > 1) {
           return { ...item, quantity: item.quantity - 1 }
         }
         return item
