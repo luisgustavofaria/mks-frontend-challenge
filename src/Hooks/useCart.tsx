@@ -1,6 +1,5 @@
 import { IProduct } from '@/components/Product/Product'
-import { ReactNode, createContext } from 'react'
-import { useState, useEffect } from 'react'
+import { ReactNode, createContext, useState, useEffect } from 'react'
 
 export interface CartContextType {
   cartItems: IProduct[]
@@ -12,11 +11,34 @@ export interface CartContextType {
   toggleCart: () => void
 }
 
-export const CartContext = createContext({} as CartContextType)
+export const CartContext = createContext<CartContextType>({} as CartContextType)
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<IProduct[]>([])
   const [hiddenCart, setHiddenCart] = useState(true)
+
+  // Carregar itens do carrinho do localStorage
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem('cartItems')
+    if (storedCartItems) {
+      console.log(
+        'Carregando itens do carrinho do localStorage:',
+        storedCartItems
+      )
+      setCartItems(JSON.parse(storedCartItems))
+    }
+  }, [])
+
+  // Salvar itens do carrinho no localStorage sempre que o estado do carrinho mudar
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      const stateJSON = JSON.stringify(cartItems)
+      console.log('Salvando itens do carrinho no localStorage:', stateJSON)
+      localStorage.setItem('cartItems', stateJSON)
+    } else {
+      localStorage.removeItem('cartItems')
+    }
+  }, [cartItems])
 
   const addToCart = (product: IProduct) => {
     const existingProduct = cartItems.findIndex(
@@ -36,40 +58,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       setCartItems((prevItems) => [...prevItems, newCartItem])
     }
   }
-  console.log(cartItems)
-
-  // const increaseQuantity = (id: number) => {
-  //   setCartItems((prevItems) => {
-  //     return prevItems.map((item) => {
-  //       if (item.id === id) {
-  //         return { ...item, quantity: item.quantity + 1 }
-  //       }
-  //       return item
-  //     })
-  //   })
-  // }
+  //console.log(cartItems)
 
   const increaseQuantity = (id: number) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.id === id && item.quantity < 10) {
-          // Verifica se a quantidade é menor que 10
-          return { ...item, quantity: item.quantity + 1 } // Garante que a quantidade máxima seja 10
-        }
-        return item
-      })
-    })
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id && item.quantity < 10
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    )
   }
 
   const decreaseQuantity = (id: number) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.id === id && item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 }
-        }
-        return item
-      })
-    })
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    )
   }
 
   const removeFromCart = (id: number) => {

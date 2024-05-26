@@ -19,7 +19,7 @@ const CartContainer = styled.div`
 
 const CartHeader = styled.div`
   padding: 50px 50px 0px 50px;
-
+  margin-bottom: 20px;
   display: flex;
 
   justify-content: space-between;
