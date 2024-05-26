@@ -1,8 +1,9 @@
 import { ShoppingCart } from '@phosphor-icons/react'
 import styled from 'styled-components'
 import Cart from '../Cart/Cart'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { motion } from 'framer-motion'
+import { CartContext } from '@/Hooks/useCart'
 
 const HeaderBackGround = styled.header`
   background-color: ${(props) => props.theme.primary};
@@ -72,6 +73,8 @@ const CartButton = styled.button`
 `
 
 export default function Header() {
+  const { cartItems } = useContext(CartContext)
+
   const [hiddenCart, setHiddenCart] = useState(true)
 
   const toggleCart = () => {
@@ -107,7 +110,7 @@ export default function Header() {
           ) : (
             <CartButton onClick={toggleCart}>
               <ShoppingCart size={20} />
-              <span>0</span>
+              <span>{cartItems.length}</span>
             </CartButton>
           )}
         </HeaderContainer>

@@ -81,7 +81,7 @@ const Description = styled.span`
   padding: 0 14px;
 `
 
-const Footer = styled.div`
+const AddToCartButton = styled.button`
   width: 100%;
   height: 32px;
   padding: 7px;
@@ -91,6 +91,8 @@ const Footer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  border: none;
+  cursor: pointer;
 
   > span {
     font-weight: 600;
@@ -115,68 +117,71 @@ const FooterContainer = styled.div`
 import { ShoppingBagOpen } from '@phosphor-icons/react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Shimmer } from 'react-shimmer'
+import { CartContext } from '@/Hooks/useCart'
 
 export interface IProduct {
   id: number
   name: string
-  brand: string
-  description: string
+  description?: string
   price: number
   photo: string
+  quantity: number
 }
 
 export default function Products() {
-  const [products, setProducts] = useState<IProduct[]>([])
-  const [loading, setLoading] = useState(true)
+  const { addToCart } = useContext(CartContext)
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          'https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=8&sortBy=id&orderBy=DESC'
-        )
-        console.log(response)
-        setProducts(response.data.products)
-      } catch (error) {
-        console.error('Error fetching products:', error)
-      } finally {
-        setTimeout(() => {
-          setLoading(false)
-        }, 2000) // Força um tempo de carregamento de 2 segundos
-      }
-    }
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery('products', async () => {
+    const response = await axios.get(
+      'https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=8&sortBy=id&orderBy=DESC'
+    )
+    return response.data.products
+  })
 
-    fetchProducts()
-  }, [])
+  //console.log(products)
+
+  if (isLoading) {
+    return (
+      <ContainerProducts>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <ContainerCard key={index}>
+            <Shimmer height={300} width={218} />
+          </ContainerCard>
+        ))}
+      </ContainerProducts>
+    )
+  }
+
+  if (isError) {
+    return <div>Error loading products</div>
+  }
 
   return (
     <PageContainer>
       <ContainerProducts>
-        {loading
-          ? Array.from({ length: 8 }).map((_, index) => (
-              <ContainerCard key={index}>
-                <Shimmer height={300} width={218} />
-              </ContainerCard>
-            ))
-          : products.map((product) => (
-              <ContainerCard key={product.id}>
-                <ContainerImage>
-                  <Image src={product.photo} width={100} height={100} alt="" />
-                </ContainerImage>
-                <ContainerTitlePrice>
-                  <Title>{product.name}</Title>
-                  <Price>R${Number(product.price).toFixed(0)}</Price>
-                </ContainerTitlePrice>
-                <Description>{product.description}</Description>
-                <Footer>
-                  <ShoppingBagOpen color="#FFFFFF" size={16} />
-                  <span>COMPRAR</span>
-                </Footer>
-              </ContainerCard>
-            ))}
+        {products.map((product: IProduct) => (
+          <ContainerCard key={product.id}>
+            <ContainerImage>
+              <Image src={product.photo} width={100} height={100} alt="" />
+            </ContainerImage>
+            <ContainerTitlePrice>
+              <Title>{product.name}</Title>
+              <Price>R${Number(product.price).toFixed(0)}</Price>
+            </ContainerTitlePrice>
+            <Description>{product.description}</Description>
+            <AddToCartButton onClick={() => addToCart(product)}>
+              <ShoppingBagOpen color="#FFFFFF" size={16} />
+              <span>COMPRAR</span>
+            </AddToCartButton>
+          </ContainerCard>
+        ))}
       </ContainerProducts>
       <FooterContainer>
         <span>MKS sistemas © Todos os direitos reservados</span>

@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { X } from '@phosphor-icons/react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 
 const CartContainer = styled.div`
   background-color: ${(props) => props.theme.primary};
@@ -164,14 +162,27 @@ const Quantity = styled.div`
     justify-content: center;
   }
 
-  span:first-child {
-    border-right: 0.3px solid #bfbfbf;
-    height: 11px;
+  button {
+    font-weight: 400;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #ffffff;
   }
 
-  span:last-child {
+  button:first-child {
+    border-right: 0.3px solid #bfbfbf;
+    height: 11px;
+    cursor: pointer;
+  }
+
+  button:last-child {
     border-left: 0.3px solid #bfbfbf;
     height: 11px;
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {
@@ -181,12 +192,14 @@ const Quantity = styled.div`
     span {
       font-size: 24px;
     }
-    span:first-child {
+    button:first-child {
       height: 20px;
+      font-size: 24px;
     }
 
-    span:last-child {
+    button:last-child {
       height: 20px;
+      font-size: 24px;
     }
   }
 `
@@ -231,11 +244,31 @@ const Footer = styled.div`
     color: #ffffff;
   }
 `
+
+import { X } from '@phosphor-icons/react'
+import { motion } from 'framer-motion'
+import { useContext, useState } from 'react'
+import { CartContext, CartContextType } from '@/Hooks/useCart'
+import { IProduct } from '../Product/Product'
+
 interface CartProps {
   onClose: () => void
 }
 
 const Cart = ({ onClose }: CartProps) => {
+  const { cartItems } = useContext<CartContextType>(CartContext)
+  const [quantityItem, setQuantity] = useState(0)
+
+  const increaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1)
+  }
+
+  const decreaseQuantity = () => {
+    if (quantityItem > 0) {
+      setQuantity((prevQuantity) => prevQuantity - 1)
+    }
+  }
+
   return (
     <CartContainer>
       <CartHeader>
@@ -246,60 +279,26 @@ const Cart = ({ onClose }: CartProps) => {
         </Close>
       </CartHeader>
       <ItemContainer>
-        <Item>
-          <div>
-            <img src={'/products/apple-watch.png'} alt="" />
-          </div>
-          <Title>Apple Watch Series 4 GPS</Title>
-          <QuantityPriceContainer>
-            <QuantityContainer>
-              <span>Qtd</span>
+        {cartItems.map((item: IProduct) => (
+          <Item key={item.id}>
+            <div>
+              <img src={item.photo} alt={item.name} />
+            </div>
+            <Title>{item.name}</Title>
+            <QuantityPriceContainer>
+              <QuantityContainer>
+                <span>Qtd</span>
 
-              <Quantity>
-                <span>-</span>
-                <span>1</span>
-                <span>+</span>
-              </Quantity>
-            </QuantityContainer>
-            <Price>R$399</Price>
-          </QuantityPriceContainer>
-        </Item>
-        <Item>
-          <div>
-            <img src={'/products/apple-watch.png'} alt="" />
-          </div>
-          <Title>Apple Watch Series 4 GPS</Title>
-          <QuantityPriceContainer>
-            <QuantityContainer>
-              <span>Qtd</span>
-
-              <Quantity>
-                <span>-</span>
-                <span>1</span>
-                <span>+</span>
-              </Quantity>
-            </QuantityContainer>
-            <Price>R$399</Price>
-          </QuantityPriceContainer>
-        </Item>
-        <Item>
-          <div>
-            <img src={'/products/apple-watch.png'} alt="" />
-          </div>
-          <Title>Apple Watch Series 4 GPS</Title>
-          <QuantityPriceContainer>
-            <QuantityContainer>
-              <span>Qtd</span>
-
-              <Quantity>
-                <span>-</span>
-                <span>1</span>
-                <span>+</span>
-              </Quantity>
-            </QuantityContainer>
-            <Price>R$399</Price>
-          </QuantityPriceContainer>
-        </Item>
+                <Quantity>
+                  <button onClick={decreaseQuantity}>-</button>
+                  <span>{quantityItem}</span>
+                  <button onClick={increaseQuantity}>+</button>
+                </Quantity>
+              </QuantityContainer>
+              <Price>R${item.price}</Price>
+            </QuantityPriceContainer>
+          </Item>
+        ))}
       </ItemContainer>
       <Footer>
         <div>
