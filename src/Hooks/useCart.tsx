@@ -9,6 +9,7 @@ export interface CartContextType {
   removeFromCart: (id: number) => void
   hiddenCart: boolean
   toggleCart: () => void
+  clearCart: () => void
 }
 
 export const CartContext = createContext<CartContextType>({} as CartContextType)
@@ -97,6 +98,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const clearCart = () => {
+    setCartItems([]) // Limpa o carrinho definindo cartItems como um array vazio
+    setHiddenCart(true)
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -107,6 +113,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         removeFromCart,
         hiddenCart,
         toggleCart,
+        clearCart,
       }}
     >
       {children}

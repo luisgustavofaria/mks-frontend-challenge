@@ -263,12 +263,13 @@ const Footer = styled.div`
     justify-content: space-between;
   }
 
-  div:last-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  button {
     background-color: #000000;
     padding: 30px 20px 30px 20px;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none; /* Remova o sublinhado */
+    outline: none; /* Remova o contorno ao focar */
   }
 
   span {
@@ -286,7 +287,7 @@ const Footer = styled.div`
     div:first-child {
       padding: 30px 30px 10px 30px;
     }
-    div:last-child {
+    button {
       padding: 20px 10px 20px 10px;
     }
   }
@@ -297,6 +298,7 @@ import { motion } from 'framer-motion'
 import { useContext, useState } from 'react'
 import { CartContext, CartContextType } from '@/Hooks/useCart'
 import { IProduct } from '../Products/Products'
+import Link from 'next/link'
 
 const Cart = () => {
   const {
@@ -353,9 +355,15 @@ const Cart = () => {
           <span>Total</span>
           <span>R${calculateTotalPrice().toFixed(2)}</span>
         </div>
-        <div>
-          <span>Finalizar Compra</span>
-        </div>
+        <Link
+          href={{
+            pathname: '/success',
+          }}
+        >
+          <button>
+            <span>Finalizar Compra</span>
+          </button>
+        </Link>
       </Footer>
     </CartContainer>
   )
