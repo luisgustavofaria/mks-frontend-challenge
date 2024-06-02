@@ -1,9 +1,4 @@
-import { ShoppingCart } from '@phosphor-icons/react'
 import styled from 'styled-components'
-import Cart from '../Cart/Cart'
-import { useContext, useState } from 'react'
-import { motion } from 'framer-motion'
-import { CartContext } from '@/Hooks/useCart'
 
 const HeaderBackGround = styled.header`
   background-color: ${(props) => props.theme.primary};
@@ -71,6 +66,12 @@ const CartButton = styled.button`
     gap: 5px;
   }
 `
+
+import { ShoppingCart } from '@phosphor-icons/react'
+import Cart from '../Cart/Cart'
+import { useContext, useState } from 'react'
+import { motion } from 'framer-motion'
+import { CartContext } from '@/Hooks/useCart'
 
 export default function Header() {
   const { cartItems, hiddenCart, toggleCart } = useContext(CartContext)
