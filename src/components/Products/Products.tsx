@@ -151,7 +151,7 @@ export default function Products() {
     return (
       <ContainerProducts>
         {Array.from({ length: 8 }).map((_, index) => (
-          <ContainerCard key={index}>
+          <ContainerCard key={index} data-testid="loading-shimmer">
             <Shimmer height={300} width={218} />
           </ContainerCard>
         ))}
@@ -167,7 +167,7 @@ export default function Products() {
     <PageContainer>
       <ContainerProducts>
         {products.map((product: IProduct) => (
-          <ContainerCard key={product.id}>
+          <ContainerCard key={product.id} data-testid="product-card">
             <ContainerImage>
               <Image src={product.photo} width={100} height={100} alt="" />
             </ContainerImage>
@@ -184,7 +184,9 @@ export default function Products() {
         ))}
       </ContainerProducts>
       <FooterContainer>
-        <span>MKS sistemas © Todos os direitos reservados</span>
+        <span data-testid="FooterContainer">
+          MKS sistemas © Todos os direitos reservados
+        </span>
       </FooterContainer>
     </PageContainer>
   )

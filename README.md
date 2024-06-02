@@ -4,8 +4,9 @@
    https://github.com/MKS-desenvolvimento-de-sistemas/mks-frontend-challenge.git
 2. Navegue até a pasta do projeto no terminal.
 3. Execute `npm install` para instalar todas as dependências.
-4. Execute `npm run dev` para iniciar o servidor de desenvolvimento.
-5. Acesse `http://localhost:3000` no seu navegador para visualizar a aplicação.
+4. Execute `npm test` para iniciar os testes.
+5. Execute `npm run dev` para iniciar o servidor de desenvolvimento.
+6. Acesse `http://localhost:3000` no seu navegador para visualizar a aplicação.
 
 # Projeto no GitHub:
 
