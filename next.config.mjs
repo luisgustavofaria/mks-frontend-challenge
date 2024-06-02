@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
-    domains: ['mks-sistemas.nyc3.digitaloceanspaces.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'mks-frontend-challenge-04811e8151e6.herokuapp.com/api-docs/',
+      },
+    ],
   },
 }
 

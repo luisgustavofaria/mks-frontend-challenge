@@ -118,7 +118,6 @@ import { ShoppingBagOpen } from '@phosphor-icons/react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
-import Image from 'next/image'
 import { Shimmer } from 'react-shimmer'
 import { CartContext } from '@/Hooks/useCart'
 
@@ -169,7 +168,7 @@ export default function Products() {
         {products.map((product: IProduct) => (
           <ContainerCard key={product.id} data-testid="product-card">
             <ContainerImage>
-              <Image src={product.photo} width={100} height={100} alt="" />
+              <img src={product.photo} width={100} height={100} alt="" />
             </ContainerImage>
             <ContainerTitlePrice>
               <Title>{product.name}</Title>

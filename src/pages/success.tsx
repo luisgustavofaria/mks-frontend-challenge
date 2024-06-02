@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from 'react'
 import { CartContext } from '@/Hooks/useCart'
 import styled from 'styled-components'
-import Image from 'next/image'
 import Link from 'next/link'
 
 const SuccessContainer = styled.div`
@@ -85,7 +85,7 @@ const SuccessPage: React.FC = () => {
       <ContainerItem>
         {cartItems.map((item) => (
           <Item key={item.id}>
-            <Image width={100} height={100} src={item.photo} alt={item.name} />
+            <img width={100} height={100} src={item.photo} alt={item.name} />
             <ContainerP>
               <P>{item.name}</P>
               <P>Quantidade: {item.quantity}</P>
